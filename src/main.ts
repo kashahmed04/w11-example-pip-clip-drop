@@ -277,76 +277,108 @@ setupListenersFor(window);
  * track of all the children and close them if needed by using request animation frame to change their 
  * position each frame and close them if needed)**
  * 
+ * for slide 6 the window represents the variable we have for window and we can open a window, 
+ * move the window to a specific location (all at one time or like an animation but it needs the elapsed time and the current time
+ * which is the request animation frame), close the window with close(), and closed returns true if the window is closed or false 
+ * if the window is not closed** (is there not an opened to say true if its opened or false if its not)**
+ * 
+ * go over currentColor (slide 6)**
+ * does svg inline refer to the path we made with the svg tag in our dvd and that allows us to add CSS to it**
+ * does svg as <img> refer to putting the svg as an image tag but we can't add styles to it**
+ * for closures is that just defining variabes (and methods)** with let and const inside of a class (or var too)** and**
+ * 
  * DVD BRANCH:
+ * 
+ * why was it that when I created a new dvd it got bigger and bigger as it when around the screen and it mostly stuck
+ * to the bottom of the screen**
  * 
  * MAIN.TS:
  * 
  * we have our buttons we seeclted from the HTML and we have an array of DVD objects and whenever we click the add button
  * it makes a new DVD and adds it to the array and adds it to the count on the parent window**
  * 
- * if we want to close eveyrthing we get each child and close it**
+ * if we want to close eveyrthing we get each child and close it (this was the loop at the bottom of main.ts)**
  * 
- * we have drive windows which uses the previous time stamp to use how much time has elapsed and gives us a number of ms between
- * each frame and we can use that to have our movement be consistent rather than per frame (consistent across all
- * softwares) and we close everything when we are done**
+ * we have drive windows which uses the previous time stamp and time stamp (current)**
+ * to use how much time has elapsed and gives us a number of ms between 
+ * each frame and we can use that to have our movement be consistent (per second because here we measure ms)**
+ * rather than per frame (consistent across all softwares) and we close everything when we are done (we click the close all button
+ * on the parent browser)**
  * 
- * this is more a manager and DVD.TS is under the hood whats happening**
+ * main is more a manager and DVD.TS is under the hood whats happening and the functionality of how eveyrthing works**
  * 
  * DVD.TS:
  * 
  * we can use the funciton scope of let and const to trick TS into making things like private properties (we have proxy, height
- * x,y,etc. that we dont want to define outside the interface)** 
+ * x,y,etc. that we dont want to define outside the interface or class)** (does var also count or no)** 
+ * if we use var in classes is that only the class scope or no** 
  * 
  * at down at the bottom of the DVD.TS it returns the things main will be aware of otherwise eveyrthing else is hidden inside 
- * of the funciton closure**
+ * of the funciton closure (or class closure)**
  * 
- * and down below that we have an interface to describe what everything we reutn is so we make sure to return everything to main
- * we need to and nothing more or nthig less**
+ * and down below that we have an interface to describe what we need to return to main so we make sure to return everything to main
+ * we need to and nothing more or nothing less**
  * 
  * initwindow sets the width and height and gets the maximum and minimum x and y postion for the window and if our task bar
  * was on the bottom then**
  * 
- * we pick a starting speed and we multilpy by 1 or negative so we can have up or down or left and right movement**
+ * we pick a starting speed and we multilpy by 1 or negative so we can have up or down or left and right movement (we only multiply
+ * by negative 1 though so if we hit the bottom wouldnt it keep going at the bottom and not move towards the top in the oppssotie direcion)**
  * 
  * we can then open the popup which is the proxy for a random width and height**
  * 
  * DVD.HTML:
  * 
  * we get reset CSS and we add some styles in the HTML rather than making a CSS file and we have a DIV with an SVG file in it**
+ * why did we do reset CSS here how do we know when to use reset CSS in other files**
  * 
  * we have fill with current color and the border of the div is current color and current color is a CSS keyword to look
  * at parent keyword and change the color if its hits the edge of the screen for the DVD SVG and the border around it**
  * 
  * we have step which lets us move at a consistent speed ragrdless of software for our x and y and we 
  * bounce from the edge of the screen if we are at the minimum or maximum x and y position and bounce changes the 
- * color of the DVD and it lets us bounce (math.random times a big number is just all F's as a number and colors
- * are a number between 0 and 16777215 then we convert that to a bse 16 string and gives us digits and A-F and if we got 0 
+ * color of the DVD and it lets us bounce (math.random times a big number is just all F's as a number** and colors
+ * are a number between 0 and 16777215 then we convert that to a base 16 string and gives us digits and A-F and if we got 0 
  * then it wont be 6 characters because)** (so we add 0's so we get 6 digits no matter what)** (why do we need 6 digits)**
  * 
- * to add SVGS we just make an image tag with .svg, but we cant alater anything inside the SVG if we use this method but the other
- * way is just include the SVG data in our HTML like setting the fill and we can make ID's and we cna target the ID with code and CSS
+ * to add SVGS we just make an image tag with .svg, but we cant alter anything inside the SVG if we use this method
+ * (like CSS and what else)** but the other
+ * way is just include the SVG data (tag)** in our HTML like setting the fill and we can make ID's and we can target the ID with code and CSS
  * to target just that part of the SVG but the downside is that if we want the SVG to show up in multilpe areas we have to copy and paste
  * it wherever we want to ues it**
+ * 
+ * go over svg in an image element (block or inline).vs. and svg being inline and what the differences and similarities are (slide 6)**
  * 
  * HOW TO TAKE VITE IN LOCAL HOST TO PUT IT ON WEB SERVER ON PEOPLE.RIT.EDU:
  * 
  * vite has been working as a local dev server but when we do npm run build it takes our project files and compiles them and 
- * puts it into a src/dist which has HTML,CSS, JS, and other files such as audio or images then we take the folder
- * and put it onto banjo**
+ * puts it into a src/dist folder which has HTML,CSS, JS, and other files such as audio or images then we take the folder
+ * and put it onto banjo** (is this folder within our project folder usually)** (slide 8)**
  * 
  * by default for the npm run build is that it just goes to people.rit.edu but we have our name on there
  * to get to our own files and to get around that we need to tell vite to use this
- * base URL and we edt our pakacage.JSON to include the base URL and if we dont have this nothing will work except the HTML**
+ * base URL and we edit our package.JSON to include the base URL and if we dont have this nothing will work except the HTML**
+ * so do we only have to add our name to our package.JSON or what exaclty do we have to add onto it** (slide 9)**
  * 
- * when we say npm run build then it will work on our brwoser (TSC is TS compiller and if there are errors we cant build) it then
- * generates out HTML, CSS, JS, and our other files (if we had a bunch of libraries in our build and if its in our JS 
- * and the has is based on the content and if the content or hash does not change then)**
+ * when we say npm run build then it will work on our browser (TSC is TS compiller and if there are errors we can't build) it then
+ * generates our HTML, CSS, JS, and our other files (if we had a bunch of libraries in our build and if its in our JS 
+ * and the has is based on the content and if the content or hash does not change then)** (slide 10)**
+ * 
+ * so basically to fix our link we have to change it in the package.JSON and edit the build command or just edit the 
+ * JSON file (slides 9-10)**
+ * 
+ * for slide 10 when it says rerun the build if we do this the first time (edit out package.JSON to follow the
+ * right url)** we dont have to rerun the build right**
  * 
  * it remembers what the files were and it remembers that hash and it will point to the new hash and it lets us make sure we have 
- * the latest code**
+ * the latest code** (what does this mean and what is the hash)** (slide 9-10 or slide 11-12)**
  * 
- * if we have more than 1 HTML files vite does not know about the extra HTML files and was not linked directly from
- * our INDEX.HTML and roll up is what lets us build with our additional HTML files and we say there is a main index.HTML
- * and the dvd.HTML which tells vite there is more than 1 HTML** (same for CSS and JS)**
+ * if we have more than 1 HTML files vite does not know about the extra HTML files and will not show them
+ * in the output and will always show index.html by default only** and (dvd.html)** was not linked directly from
+ * our index.html** and roll up options is what lets us build with our additional HTML files and we say there is a main index.html
+ * and the dvd.HTML which tells vite there is more than 1 HTML (do we always need to specify a main: what if we dont does it 
+ * assume index.ts is the main)** (same for CSS and JS or can vite detect multiple files in those
+ * cases)**(can we put any name for before the : to define our HTML files or how do we know what to put) (slides 11-12)**
+ * (do we always need a main: then the name can be whatever we want for the other files)**
  * 
  */
