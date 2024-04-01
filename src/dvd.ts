@@ -10,7 +10,7 @@ const MIN_PX_PER_SECOND = 50;
 // const in their methods they count as closures??)** what is the difference between closures and JS classes** (is this a class
 // or a method)**
 export const makeDVD = (): DVD => { //are we saying the class is of type dvd we made for the interface at the end why
-  //do we only specify certain things in the interface and not everything**
+  //do we only specify certain things in the interface and not everything to use in the class**
   // a reference to the moving window
   let proxy: Window;
 
