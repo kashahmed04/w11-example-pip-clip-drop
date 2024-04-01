@@ -367,11 +367,15 @@ setupListenersFor(window);
  * so basically to fix our link we have to change it in the package.JSON and edit the build command or just edit the 
  * JSON file (slides 9-10)**
  * 
+ * what does it mean by smooshes for slide 8 does it make it like a zip file or**
+ * 
  * for slide 10 when it says rerun the build if we do this the first time (edit out package.JSON to follow the
  * right url)** we dont have to rerun the build right**
  * 
  * it remembers what the files were and it remembers that hash and it will point to the new hash and it lets us make sure we have 
  * the latest code** (what does this mean and what is the hash)** (slide 9-10 or slide 11-12)**
+ * 
+ * for slide 12 if we did the roll up options first we dont need to rerun and we can just run it once right**
  * 
  * if we have more than 1 HTML files vite does not know about the extra HTML files and will not show them
  * in the output and will always show index.html by default only** and (dvd.html)** was not linked directly from
@@ -379,6 +383,8 @@ setupListenersFor(window);
  * and the dvd.HTML which tells vite there is more than 1 HTML (do we always need to specify a main: what if we dont does it 
  * assume index.ts is the main)** (same for CSS and JS or can vite detect multiple files in those
  * cases)**(can we put any name for before the : to define our HTML files or how do we know what to put) (slides 11-12)**
- * (do we always need a main: then the name can be whatever we want for the other files)**
+ * (do we always need a main: then the main file then after the name: can be whatever we want for the other files or)**
+ * 
+ * for slide 10 how do we know what the path will be for our data where do we start creating our path**
  * 
  */
