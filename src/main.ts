@@ -1,5 +1,5 @@
 import './reset.css';
-import './styles.css';
+import './styles.css'; //how does it know to import styles if there was no export in styles**
 
 const pipButton = document.querySelector('#pipButton') as HTMLButtonElement;
 const dropButton = document.querySelector('#dropButton') as HTMLButtonElement;
@@ -110,36 +110,60 @@ pipButton.addEventListener('click', async () => {
 
   // request a PiP window (async/await)
   //so pip and eye dropper only return promises by default without having us to say async in method signature right**
-  //and clipboard does not so we have to make a promise outself for it** (where is the aync here then if we need to
+  //and clipboard (handlecopyrequest) does not so we have to make a promise ourself for it** 
   //thats why we dont need an async for pip window and eyedropper but we do for clipboard)**
+  //this is when we want to actually wait for the pip to load in if its supported whereas above 
+  //its is not supported or cant load the pip in**
+  //we wait until the window is finished being requested here if its supported (until the pip fully loads in)**
   const pipWindow: Window = await (
     window as unknown as any
   ).documentPictureInPicture.requestWindow();
 
   // copy some CSS from the main window to the PiP window
+  //what does copy styles do and how does it know which styles to copy and we call pipwindow because that represents
+  //the loaded window because we said it was of type window and we have to wait for it to load then
+  //apply styles to it**
   copyStyles(pipWindow);
 
+  //this gets the interface element which is all of our content but when we say content.parentElement 
+  //how is it a div because if we get the parent of the interface div wouldnt that be the body**
   const content = document.querySelector('#interface') as HTMLDivElement;
   const parent = content.parentElement as HTMLDivElement;
 
   // move the interface into the pipWindow
+  // why do we move the content from the main window to the pipwindow why cant we just copy it over
+  // is this specifically for pip**
   pipWindow.document.body.appendChild(content);
   // reset the event handlers
+  // why do we reset the event handlers if we move the interface from the browser to the pip  (do we usually only
+  //do this with pip why)**
   setupListenersFor(pipWindow);
   // show the placeholder
+  //how does it know to show the placeholder where the interface was on the main screen**
+  //there was no show or hide class so was this under the interface before (we didnt change the z-index though)**
+  //why do we do display flex here if we already did it in the styles in index.html**
+  //I thought we would have put show here instead since the style already have flex**
+  //can we do this or classlist for HTML element how do we know which to use**
   placeholder.style.display = 'flex';
 
   // when the PiP closes
+  // is page hide built in and only used with pip**
   pipWindow.addEventListener('pagehide', () => {
     // put the content back in the main window
+    // can we say parent.document.body.appendChild(content); or why would we only say append child only here**
+    // does parent represent a div here or the body** (which div)**
     parent.appendChild(content);
     // reset the event handlers
+    //why do we reset the event handlers and how does it know what window is and how does it know
+    //window is the main window**
     setupListenersFor(window);
     // hide the placeholder
+    //we hide the placeholder that says the pip window is opened
     placeholder.style.display = 'none';
   });
 });
 
+//set up the event listeners intiially when the page loads (why would we do this initially)**
 setupListenersFor(window);
 
 
