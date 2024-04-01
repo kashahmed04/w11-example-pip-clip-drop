@@ -1,0 +1,16 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+/* #interface is styled in index.html */
+
+#placeholder {
+  display: none;
+  min-height: 156px;
+  color: white;
+  background-color: rgba(25, 25, 25, 1);
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+}
