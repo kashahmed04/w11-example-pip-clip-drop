@@ -1,3 +1,7 @@
+// the eyedropper is not widely supported
+// so there are no TypeScript types for it
+// here, we add our own (and extend the Window interface)
+
 interface ColorSelectionOptions {
   signal?: AbortSignal;
 }
