@@ -170,74 +170,94 @@ setupListenersFor(window);
 /**
  * NEW NOTES
  * 
- * we will talk about picture and picture, eyedropper, clipboard, window, and build and we will tlak about building and deploying
+ * we will talk about picture and picture, eyedropper, clipboard, window, and build and we will talk about building and deploying
  * with vite to put on a server for others to see rather than a local host like vite we have been doing**
  * 
- * we hhave a n open picutre and picture button that opens the content in another windoe and it stays on top of everything and youtube
- * also has picture and picture to view videos for whatever tab we want to go to and we get only one picture and picture per brwoser**
+ * we have an open picutre and picture button that opens the content in another window and it stays on top of everything and youtube
+ * also has picture and picture to view videos and it applies
+ * for whatever tab we want to go to and we get only one picture and picture per browser**
+ * picture and picture allows only one window and it goes on top of all the other tabs we go to**
+ * when the parent is closed does the picture in picture also close here**
  * 
- * and we have a color picker and we can find a pixel for a color and it worls outside the browser window and gives us color 
- * on our task bar and out home screen** 
+ * and we have a color picker and we can find a pixel for a color and it works outside the browser window and gives us color 
+ * on our task bar and our home screen if we wanted** 
  * 
- * it also updates the bacgkround color and puts the hex code on the background of out server**
+ * it also updates the background color and puts the hexcode on the background for out interface div**
  * 
- * picture and picture was originally for a window but now we can now do it with whatever DOM element we want (not available on
+ * picture and picture was originally for a video element only but now we can now do it with whatever DOM element we want (not available on
  * firefox though)**
+ * 
  * 
  * EYEDROPPER:
  * 
- * OPENS EYEDROPPER PICKER TOOL
+ * opens an eyedropper picker tool when we press pick color
  * only available in chrome, edge, and opera 
  * because of this it does not exist on the window object as far as typescript is concered and we have to trick it to
- * let it work on the window**
+ * let it work on the window** (where did we do this specifically was it when we said as unknown as any what does this do
+ * why couldnt we say any)**
+ * 
+ * what does it mean by defintions for non-mainline feature for eyedropper on slide 4**
+ * main controls the eyedropper in terms of launching it and changing the interface element based on the color we chose
+ * as well as the pip right**
  * 
  * CLIPBOARD:
  * 
- * read: lets us read rich information (surcutured markup, image files)
+ * read: lets us read rich information (structured markup, image files)
  * readtext: reading only strings (text)
  * 
- * write: write any string into the
+ * write: write any string into the**
  * wiretext: encode the**
  * 
  * stick with readtext and writetext because working with strings is easier and it gets complicated if we work with
- * read and write only**
+ * read and write only** (how does it get complicated)** (slide 5)**
  * 
  * 
  * INDEX.HTML:
  * 
  * we have a style element in the head because as we open the picture and picture it loses the styles for that
- * window so we can grab the id fromt the styles and apply the styles in the picture and picture button**
+ * window so we can grab the id from the styles and apply the styles in the picture and picture button** (why does it lose
+ * its styles when we open pip and open it back up in the main browser when we exit pip)**
  * 
- * we have a placeholder div thats hidden but when we open the picture and picture it gets shown (it gives the interface
- * to the other window and shows the interface on the new window)(in reality it**)
+ * we have a placeholder div thats hidden (how is it hidden because we dont give it a classlist 
+ * in the HTML)** but when we open the picture and picture it gets shown (it gives the interface
+ * to the other window and shows the interface on the new window)(in reality it)**
+ * why do we transfer the data over to the pip or to the main window and not just copy the data over instead**
+ * 
+ * are eyedropper, pip, clipboard, window, and build all API's or which ones are API's (are they restful API's)**
  * 
  * MAIN.TS:
  * 
  * has selectors for HTML and has handle color and handle copy request and since the eyedropper and the clipbaord API
- * use the window object we have to reset the listeners as we open the picture and picture (and clipboard)**
+ * use the window object we have to reset the listeners as we open the picture and picture**
  * 
  * the functions uses the window as a parameter which is the main window or the picture and picture (small window) when its open**
+ * so when we say window depending on if the pip is open or the actual brwoser window it will use that
+ * and we dont have to specify because they are both windows**
  * 
  * for the copy request we just say window.naviaror.clipboard(write some text) and we write the color output
  * and it returns a promise to let us know its complete and we use await to wait until we get the color or an error
  * then show it on our window**
  * 
- * for eye driooer we assume we have supporrt and make our eyedropped and we use .then because eyedropper returns a promise**
+ * difference between await and .then for promises and are they only used in promises to stop everything** (or current file)**
+ * until we loaded everything or the promise is done**
  * 
- * do promises use await or then (wahst the difference dont they both involve waiting to loading something)**
+ * for eye dropper we assume we have supporrt and make our eyedropped and we use .then because eyedropper returns a promise**
+ * why do we assume we have support what if we dont do we just throw an error if the promise did not work for eye dropper**
+ * 
+ * do promises use await or then (what the difference dont they both involve waiting to loading something)**
  * 
  * we create a style tag for the picture in picture window then copy the style from one window to the next and we copy that picture and
- * picture style into the child which is the child window**
+ * picture style into the child which is the child window and back to the parent when we close the pip window**
  * 
  * inside the picture and picture button event handler we check for brwoser availability and we see if the dociuetpictureandpicture
  * poperty exists and we trick TS to use the unknown property and we take the window property and we cast it as unknown then as any 
  * an TS can be anything for the window and that way we can use the picture and picture mode**
  * 
- * we can do request window and that returns a pip window to us then we copy styles then frab the interface and find out what the aprent was
+ * we can do request window and that returns a pip window to us then we copy styles then grab the interface and find out what the parent was
  * then append the interface content to the window, set up the new windows, and display that event handler**
  * 
- * whenever the pp window closes we appened the content back to the parent and we set up the event listender for the window and make the 
- * placeholder none to show the smaller window was closed 
+ * whenever the pip window closes we appened the content back to the parent and we set up the event listeners again for the 
+ * parent window and make the placeholder none to show the smaller window was closed** 
  * 
  * EYEDROPPER.TS:
  * 
@@ -248,6 +268,9 @@ setupListenersFor(window);
  * 
  * to open child windows (these windows dont stay on top of everything else and dont leave when we close parent 
  * window and we can have multiple child windows with these new mtethods instead of 1)**
+ * 
+ * for picture in picture it stays on top of all the other tabs, we can only have 1 pip, and can it still show
+ * even if the parent tab is closed**
  * 
  * we can have DVDs and we can have the DVD screens go around the window and bounce off the bounds 
  * we could also close all the windows and they could go away when we open multilpe windows (the main window keeps 
