@@ -105,3 +105,11 @@ pipButton.addEventListener('click', async () => {
 });
 
 setupListenersFor(window);
+
+
+/**
+ * NEW NOTES
+ * 
+ * 
+ * 
+ */
