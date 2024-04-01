@@ -7,6 +7,9 @@ const colorOutput = document.querySelector('#colorOutput') as HTMLDivElement;
 const placeholder = document.querySelector('#placeholder') as HTMLDivElement;
 const clipButton = document.querySelector('#clipButton') as HTMLButtonElement;
 
+//is there a method for thw way we open multiple tabs for the dvd because here we have pip so what was the term
+//for the way we opened tabs in dvd file**
+
 //does the window element represent our whole brwoser only in the current window we are in**
 const handleColorRequest = (win: Window) => {
   // check for browser support
