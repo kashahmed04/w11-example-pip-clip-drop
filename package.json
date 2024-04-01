@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build --base=/~jcpigm/330-2235/w11-example-pip-clip-drop/",
+    "build": "tsc && vite build --base=/~jcpigm/330-2235/w11-example-pip-clip-drop/dvd/",
     "preview": "vite preview"
   },
   "devDependencies": {
