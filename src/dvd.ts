@@ -10,9 +10,10 @@ const MIN_PX_PER_SECOND = 50;
 // closures act similar to a class and we dont need to make a new instance and we dont need this. anywhere
 // the return statement returns what we say it does and when we create a dvd thats what exists within it in main
 // so we can use this only 
+// can we still make a new instance of the class though or no**
 export const makeDVD = (): DVD => { //this allows us to know what the funciton signature will look like in the class
-  // and that way main knows what to expect from dvd and makeDVD it knows to use whats in the interface otherwise
-  //TS will yell at us
+  // and that way main knows what to expect from a dvd** and makeDVD knows to use whats in the interface otherwise
+  // TS will yell at us
   // a reference to the moving window
   let proxy: Window;
 
@@ -25,7 +26,7 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
   let min_y: number;
 
   // position and size numbers
-  // is this the position (x and y) for the popup window and the width and height for the popup window (yes)
+  // is this the position (x and y) for the popup window and the width and height for the popup window (yes)**
   let width: number;
   let height: number;
   let x: number;
@@ -45,7 +46,7 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
 
     // screen boundaries
     // the minimum x and y takes into account the task bars and other things not on the browser
-    // but the maximum x and y are for how big we can be for the bounds
+    // but the maximum x and y are for how big we can be for the bounds (why does it not take into account the task bars as well)**
     max_x = window.screen.width - width;
     max_y = window.screen.height - height;
     min_x = window.screen.width - window.screen.availWidth;
@@ -53,7 +54,8 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
 
     // starting position
     // pick a random spot for the popup to go 
-    // we get somewhere between the minmum and maximum and we subtract for the random to keep it in range  
+    // we get somewhere between the minmum and maximum and we subtract for the random to keep it in range 
+    // we subtract our minimum value from our maximum value so we can stay in bounda because if we just did maximum then** 
     x = Math.floor(min_x + Math.random() * (max_x - min_x));
     y = Math.floor(min_y + Math.random() * (max_y - min_y));
 

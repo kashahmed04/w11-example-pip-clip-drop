@@ -18,12 +18,13 @@
       div {
         /*when we use it as img element (a really big inline unless we tell it its a block element)
         then we cant change the svg and when we use inline svg here then we can
-        add classes and ID's to the svg and adjust the svg as needed like colors*/
+        add classes and ID's (any styles)** to the svg and adjust the svg as needed like colors***/
         /*when we assign the color property in CSS it assigns the text color and current color
-        says looking at our context color right now we check what the text color is assigned to and use that color
+        says looking at our context color** right now we check what the text color is assigned to and use that color
         when we use current color and we set the border and the fill color of the svg to the current text color and 
         they are like varaibles in CSS and if we change the textcolor and everything that uses current color will inherit that
-        new color (we get it for free in the HTML for black by default but we change it in the JS)*/
+        new color (we get it for free in the HTML for black by default for current color but we change it in the JS)**
+        in the JS we changed .color though not textcolor how does that work***/
         border: 5px solid currentColor;
         border-radius: 10px;
       }

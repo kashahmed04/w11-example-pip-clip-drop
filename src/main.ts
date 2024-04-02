@@ -33,19 +33,23 @@ let previousTimeStamp: number;
 
 const driveWindows: FrameRequestCallback = (timeStamp) => {
   // manage the calculations for time-between-frames
-  // time between each request animation frame and how much time has elapsed since we tried to update things
+  // time between each request animation frame and how much time has elapsed since we tried to update things**
+  // this is when we first start to define the previous time stamp right**
   if (previousTimeStamp === undefined) {
     previousTimeStamp = timeStamp;
   }
+  
+  //this will always be positive becase timestamp will always be larger than previoustimestamp**
   const elapsed = timeStamp - previousTimeStamp;
 
   // drive each DVD window
-  // the dvd is the current dvd we have and the index is the index of the array we have 
+  // the dvd is the current dvd we are on and the index is the index of the array of dvd's we are on** 
   dvds.forEach((dvd, index) => {
     if (dvd.isOpen()) {
       // move it if it's still open
       // elapsed is in ms and we chose step take in time in seconds so the movement speeds are in pixels per second
-      // for dvd.ts and we divide by 1,000 to pass in seconds to use in dvd.ts for pixels per second
+      // for dvd.ts and we divide by 1,000 to pass in seconds to use in dvd.ts for pixels per second**
+      // how do we know if something is in ms or seconds**
       dvd.step(elapsed / 1000);
     } else {
       // remove it if it has been closed
@@ -66,5 +70,6 @@ const driveWindows: FrameRequestCallback = (timeStamp) => {
 };
 
 //initially start the method off 
-//when we call drivewindows we get a timestamp for free
+//when we call drivewindows we get a timestamp for free (is the timestamp as soon as the browser
+//starts and it starts counting up in ms)**
 window.requestAnimationFrame(driveWindows);
