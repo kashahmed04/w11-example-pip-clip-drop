@@ -16,8 +16,14 @@
         padding: 10px;
       }
       div {
-        /*what does currentColor do here and why did we need it here and for the path and what does the path do
-        for the svg***/
+        /*when we use it as img element (a really big inline unless we tell it its a block element)
+        then we cant change the svg and when we use inline svg here then we can
+        add classes and ID's to the svg and adjust the svg as needed like colors*/
+        /*when we assign the color property in CSS it assigns the text color and current color
+        says looking at our context color right now we check what the text color is assigned to and use that color
+        when we use current color and we set the border and the fill color of the svg to the current text color and 
+        they are like varaibles in CSS and if we change the textcolor and everything that uses current color will inherit that
+        new color (we get it for free in the HTML for black by default but we change it in the JS)*/
         border: 5px solid currentColor;
         border-radius: 10px;
       }
@@ -25,11 +31,11 @@
   </head>
   <body>
     <div>
-      <!-- in-lining the svg lets us manipulate it with CSS 
-      where exactly do we make the element inline and how does it allow us to manipulate with CSS**
-      if an svg is not inline (block element instead) can we not manipulate with CSS**-->
-      <!--what does the viewBox do and how do we know how big to make it**-->
-      <!--what does the path do and how do we know to have 2 paths for an svg** (how many paths should an svg have)**-->
+      <!--what does the viewBox do and how do we know how big to make it (width and height takes up the space it occupies
+      and the viewbox says in our drawing coorindates what is the rectangle that are the extents of this image
+      like cropping the coordinate space to just the drawing we care about)-->
+      <!--1 is the dvd text and the other is the dvd image below the text and its 2 different regions drawn as seperate paths
+      and it was the way the image was structured (there are two different paths for the image)-->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100%"
