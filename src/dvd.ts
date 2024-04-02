@@ -55,13 +55,15 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
     // starting position
     // pick a random spot for the popup to go 
     // we get somewhere between the minmum and maximum and we subtract for the random to keep it in range 
-    // we subtract our minimum value from our maximum value so we can stay in bounda because if we just did maximum then** 
+    // we subtract our maximum value from our minimum value so we can stay in bounds because if we just did maximum then** 
     x = Math.floor(min_x + Math.random() * (max_x - min_x));
     y = Math.floor(min_y + Math.random() * (max_y - min_y));
 
     // starting speed
     const upper = MAX_PX_PER_SECOND - MIN_PX_PER_SECOND;
-    // when it bounces it will neagte the speed and move in the other direction
+    // when it bounces it will neagte the speed and move in the other direction (this gives us the average between our
+    //maximum and minimum speed)**(could we have just used 1 value for speed why do we have 2 of them then subtract)**
+    //what happens if the upper is negative where would it go**
     dx =
       Math.floor(Math.random() * upper + MIN_PX_PER_SECOND) *
       (Math.random() > 0.5 ? 1 : -1);
@@ -72,7 +74,7 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
     // actually open the window (and save a reference into proxy)
     proxy = window.open(
       './dvd.html', // URL to load (load the html into the popup)
-      '_blank', // into a _blank page (we have a popup so we make it a blank window)
+      '_blank', // into a _blank page (we have a popup so we make it a blank window with out HTML in it)**
       `popup,width=${width},height=${height},screenX=${x},screenY=${y}`, 
     ) as Window;
   };
@@ -81,6 +83,8 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
     // when the screen edge is hit
     // update the body text color to a random color
     //what does the # do here does it give us a base 16 number with the # for the color to apply on the dvd (yes)
+    //we change the color here so the current color refers to this color in the dvd.html (I thought it was only for text color though
+    //to use current color or is it when we just define any color)**
     proxy.document.body.style.color =
       '#' +
       Math.floor(Math.random() * 16777215)
@@ -89,12 +93,14 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
     // 16777215 is FFFFFF in decimal
     // pick a random integer from 0 - 16777214, and convert it to a base-16 string
     // if math.random comes back as 0 then its a single 0 and we have to pad out the beginnning with 0's to get it to 6 characters
-    // if we dont have 6 numbers it adds 0's until it gets to beginning of the hex code
+    // if we dont have 6 numbers or characters (for hex its numbers or characters)** it adds 0's until to the beginning 
+    //until there are 6 entries of the hex code**
   };
 
   const step = (deltaTimeSeconds: number) => {
     // attempt to move
-    // this makes it so its constant based on whatever machine and whatever refresh rate the machine uses 
+    // this makes it so its constant based on whatever machine and whatever refresh rate the machine uses
+    // so it wont be the same across softwares because of the refresh rate** 
     x = x + dx * deltaTimeSeconds;
     y = y + dy * deltaTimeSeconds;
 
@@ -143,12 +149,15 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
   // call to actually open the window
   initWindow(); //so when we click add it runs make dvd but we call this here to open the popup
   //after everythign is created for the window (we call init window so that we can initially set up a dvd when we make one in main)
+  //why do we call initwindow if we call the make dvd class from main or do methods only get defined and not called within the class
+  //itself and we have to actually call methods from the class for it to work**
 
   // return only the properties we want to expose to outside files
   // we want main to be able to use the proxy which is the current window 
   // and we return these methods to use it in main with each dvd
   return {
-    getWindow: () => {
+    getWindow: () => { //why do we return a method here and not just proxy** (or is this not a method what is this)**
+      //difference between this and a method**
       return proxy;
     },
     isOpen,
@@ -161,4 +170,5 @@ export interface DVD {
   getWindow: () => Window;
   isOpen: () => boolean;
   step: (deltaTimeSeconds: number) => void;
+  //difference betweeh using the : and the equals sign for const isOpen = for example instead of the :**
 }

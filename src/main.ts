@@ -49,23 +49,28 @@ const driveWindows: FrameRequestCallback = (timeStamp) => {
       // move it if it's still open
       // elapsed is in ms and we chose step take in time in seconds so the movement speeds are in pixels per second
       // for dvd.ts and we divide by 1,000 to pass in seconds to use in dvd.ts for pixels per second**
-      // how do we know if something is in ms or seconds**
+      // how do we know if something is in ms or seconds** (is everything in JS by ms)** (we chose to pass in seconds
+      // for dvd.ts so we need to divide by 1,000 to get seconds)** (could we have also done ms or why did we only do seconds)**
+      // how did we know its pixels per second how do we know the unit**
       dvd.step(elapsed / 1000);
     } else {
       // remove it if it has been closed
       // we end up closing at the current index and during the next frame it removes each item from the array
-      // 1 at a time (we could also assign it to an empty array if it was not a constant)
+      // 1 at a time (we could also assign it to an empty array if it was not a constant variable)** 
+      //(why did we make it constant variable)**
       dvds.splice(index, 1);
       //we set the innertext to the arrays current length 
-      //we change the innertext to adjust for the dvd window change 
+      //we change the innertext to adjust in the main window because we are decreasing the dvd's in the array** 
       dvdCount.innerText = dvds.length.toString();
     }
   });
 
-  //as we keep going in this method we replace the previous time with the current timestamp
+  //as we keep going in this method we replace the previous time with the current timestamp (timestamp will always
+  //be larger than previoustimestamp)**
   previousTimeStamp = timeStamp;
 
   //we keep calling this each frame
+  //we get a new timestamp per frame for free when we call driveWindows** (how)** (how do we know what to call to get it for free)**
   window.requestAnimationFrame(driveWindows);
 };
 
