@@ -2,7 +2,8 @@
 // so there are no TypeScript types for it
 // here, we add our own (and extend the Window interface)
 
-//go over all and how does it use it in main because we did not have an export here for an import in main**
+//TS knows to use these as types automatically and it does it by convention
+//and it looks for .d.ts file extension so we can automatically use this in our JS 
 interface ColorSelectionOptions {
   signal?: AbortSignal;
 }
