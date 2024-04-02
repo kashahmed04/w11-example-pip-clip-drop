@@ -13,17 +13,16 @@ const dvds: DVD[] = [];
 dvdButton.addEventListener('click', () => {
   // create the DVD entity and add it to dvds array
   //for each dvd associate it with the class that has all the methods the
-  //dvd popup should have**
+  //dvd popup should have
   dvds.push(makeDVD());
   // update the displayed count
-  // we get the current count of the array for how many dvd popups there are**
+  // we get the current count of the array for how many dvd popups there are
   dvdCount.innerText = dvds.length.toString();
 });
 
 dvdCloseAllButton.addEventListener('click', () => {
   // close all the DVD windows
-  // how does it know to close because we call get window which is**
-  // and what does the close() do is it built in because we did not define it in our class or here**
+  // this cloeses all the windows
   dvds.forEach((dvd) => {
     dvd.getWindow().close();
   });
@@ -31,48 +30,41 @@ dvdCloseAllButton.addEventListener('click', () => {
 
 let previousTimeStamp: number;
 
-//for the frame request callback do we need it to be able to get the time that has passed in between each frame 
-//for the popups as they move around the screen** (why do we need the time)**
+
 const driveWindows: FrameRequestCallback = (timeStamp) => {
   // manage the calculations for time-between-frames
-  //this is initially when we start**
+  // time between each request animation frame and how much time has elapsed since we tried to update things
   if (previousTimeStamp === undefined) {
     previousTimeStamp = timeStamp;
   }
   const elapsed = timeStamp - previousTimeStamp;
-  //does timestamp keep going to the current time and we set that to the previous timestamp so its positive
-  //when we subtract because timestamp will always be greater than previoustimestamp**
 
   // drive each DVD window
-  //whats is index we never defined it in here**
+  // the dvd is the current dvd we have and the index is the index of the array we have 
   dvds.forEach((dvd, index) => {
     if (dvd.isOpen()) {
       // move it if it's still open
-      //we get the time in between each frame and divide it by 1,000 then make call the step method to actually move the popup
-      //around the window screen**
-      //this is in ms right is it like that for all time in JS**
-      //how did we know to do this**
+      // elapsed is in ms and we chose step take in time in seconds so the movement speeds are in pixels per second
+      // for dvd.ts and we divide by 1,000 to pass in seconds to use in dvd.ts for pixels per second
       dvd.step(elapsed / 1000);
     } else {
       // remove it if it has been closed
-      //splice modified the original array and removed the index we closed and only removes that thing since there is a 1**
-      //could we have done remove or is that for another data type**
-      //why dont we clear the whole array and make it an empty array instead because there is only an option to close
-      //all the popups**
+      // we end up closing at the current index and during the next frame it removes each item from the array
+      // 1 at a time (we could also assign it to an empty array if it was not a constant)
       dvds.splice(index, 1);
       //we set the innertext to the arrays current length 
-      //can we just say 0 here since we close all the popups at once**
+      //we change the innertext to adjust for the dvd window change 
       dvdCount.innerText = dvds.length.toString();
     }
   });
 
-  //as we keep going in this method we replace the previous time with the current timestamp**
-  //how does it know what to pass for timestamp in the parameter if we never call this**
+  //as we keep going in this method we replace the previous time with the current timestamp
   previousTimeStamp = timeStamp;
 
-  //we keep calling this each frame**
+  //we keep calling this each frame
   window.requestAnimationFrame(driveWindows);
 };
 
-//initially start the method off**
+//initially start the method off 
+//when we call drivewindows we get a timestamp for free
 window.requestAnimationFrame(driveWindows);
