@@ -10,6 +10,10 @@ const clipButton = document.querySelector('#clipButton') as HTMLButtonElement;
 //is there a method name for the way to open multiple tabs for the dvd file because here we have pip so what was the term
 //for the way we opened multiple tabs in dvd file**
 
+//for pip we can have one tab, it will go on top of the other tabs we open, and it will close when the main tab closes**
+//for multiple tabs we can have multiple, they will not lay on top of the current tab, and the popups will remain if we close
+//the main tab but will not apply any of the JS to it (to move and in general if we close the main tab on popup multiple windows)**
+
 //does the window element represent our whole brwoser only in the current window we are in
 //the window element is the root element of the browser and it ends up being representative of the browser window,
 //the html document, or events on the browser itself (the ones specific to the browser),
@@ -20,7 +24,8 @@ const clipButton = document.querySelector('#clipButton') as HTMLButtonElement;
 //proxy for the dvd and its a reference to another window (this allows us to communicate between the pop up and the main window)
 const handleColorRequest = (win: Window) => {
   // check for browser support
-  // the eye dropper is a web API, or native API that comes with the browser and libraries are things we load through npm
+  // the eye dropper and everything else on slides 
+  // is a web API, or native API that comes with the browser and libraries are things we load through npm
   // and network API's are third party API's (like pokemon API, and API's where we call out to a server) 
   if (!win.EyeDropper) {
     colorOutput.innerText = 'Your browser does not support the EyeDropper API';
@@ -47,6 +52,8 @@ const handleColorRequest = (win: Window) => {
   eyeDropper
     .open() //the eyedropper is then opened and it returns a promise as a result of opening it 
     .then((result: { sRGBHex: string }) => { 
+      //so when we click the button to open the eyedropper it opens but how does it handle if we click to get a color does it stay
+      //in this .then the whole time we have the eyedropper open to get the colors and display them**
       // once we have a result
       // update the text display
       colorOutput.innerText = result.sRGBHex;
@@ -54,21 +61,21 @@ const handleColorRequest = (win: Window) => {
       (colorOutput.parentElement as HTMLElement).style.backgroundColor =
         result.sRGBHex; //is parentElement built in and would it be the interface div how does it know
         //to only include the color in that box is it because of the div being a block element and doing the color in that whole div
-        //(yes) it changes the color of the div 
+        //(yes) it changes the color of the div** (why do we say HTMLElement and not put div with it because the interface is a div)**
     })
     .catch((e) => {
       colorOutput.textContent = e; //if we cant get the color then there could be an error
     });
 };
 
-//eye dropper and picutre and picture return a promise and the clipboard does not so we need a promise for it 
+//eye dropper and picutre and picture return a promise and the clipboard does not so we need a promise for it** 
 //whenever we use the clipboard do we have to use navigator (does bluetooth, clipboard, etc.)
 const handleCopyRequest = async (win: Window) => {
   try {
     // write some text to the clipboard
     await win.navigator.clipboard.writeText(colorOutput.innerText);
-  } catch (e) { //what would be an error would it be if there was no color output when we clicked a color or 
-    //just the ______ when we start the browser (it would save to ourclipboard if we just had the ______)
+  } catch (e) { //what would be an error would it be if there was no color output (yes)**
+    //just the ______ when we start the browser (it would save to ourclipboard if we just had the ______ as well)
     console.error(e);
   }
 };
@@ -80,8 +87,12 @@ const setupListenersFor = (win: Window) => {
 
   //onclick is a property and when we set it then it gets overridden (if we have one button and we have 4 functions
   //then if we have an onclick and click a button it would use the most recent method we connected the button to)(1 funciton only
-  //for one click)
-  //when we have addeventlistener if we click it once the button will do all 4 functions will run
+  //for one click)(which is the most recent funciton)
+  //when we have addeventlistener if we click it once the button will do all 4 functions will run (is this if we have the same
+  //button attached to different methods for onclick and addeventlistener and onclick)**
+
+  //couldnt we have done addeventlistener here because we have different buttons and they would both
+  //call different methods so how would it duplicate**
 
   clipButton.onclick = () => {
     //we pass in the current window into these methods (yes)
@@ -109,7 +120,7 @@ const copyStyles = (win: Window) => {
   //we would duplicate the html and instead of moving the content like we do with the pip button event handler
   //we could generate html and append that directly (we would make another html for the pip then apply it when the button is clicked)
   //we would have to build the HTML in JS and instead of appending it to the main document we would append it to the pip
-  //document)
+  //document)(so would it be seperate HTML or within the JS make the HTML why would we do that)**
 };
 
 pipButton.addEventListener('click', async () => {
@@ -140,45 +151,54 @@ pipButton.addEventListener('click', async () => {
   // copy some CSS from the main window to the PiP window
   // its copying everything in the style element on the main page but there is still the styles.css and the 
   // reset.css that are not part of the copy over and it only copies from the HTML
+  // how would we copy from the styles.css and reseet.css**
   copyStyles(pipWindow);
 
   //this gets the interface element which is all of our content but when we say content.parentElement 
-  //how is it a div because if we get the parent of the interface div wouldnt that be the body (yes and we can say body element)
+  //how is it a div because if we get the parent of the interface div wouldnt that be the body (yes and we can say HTML body element)
   const content = document.querySelector('#interface') as HTMLDivElement;
   const parent = content.parentElement as HTMLDivElement; //HTMLBodyElement
 
   // move the interface into the pipWindow
-  // why do we move the content from the main window to the pipwindow why cant we just copy it over
-  // here we get the html
+  // here we get the html (before we got the CSS only)**
   pipWindow.document.body.appendChild(content);
   // reset the event handlers
   // why do we reset the event handlers if we move the interface from the browser to the pip 
   // we assign the onclick handlers so they are getting overridden or repalced and it gets put it a new
-  // window and we need the window to talk to the eye dropper and the clipboard (it reassigns the window to pipwindow)
+  // window and we need the window to talk to the eye dropper and the clipboard (it reassigns the window to pipwindow for
+  // the click event handlers)**
   setupListenersFor(pipWindow);
   // show the placeholder
-  // in styles.css we have the place holder none in the styles.css so we do display flex here to override that (we did not need
+  // in styles.css we have the placeholder none so we do display flex here to override that (we did not need
   //the styles.css)
   placeholder.style.display = 'flex';
+  //does this go ontop of our interface in the main window or does it replace whats there**
+  //could we have just not had this to have our data show up in main window too when we opened pip window**
 
   // when the PiP closes
   // is page hide built in and only used with pip (used for other purposes as well)
+  //so this accounts for when we close the window orselves right**
   pipWindow.addEventListener('pagehide', () => {
     // put the content back in the main window
     // can we say parent.document.body.appendChild(content); or why would we only say append child only here (parent is the body
     //already thats why)
-    //the content knows who the parent is and we just reassign the parent back to the parent 
+    //the content knows who the parent is and we just reassign the parent back to the parent (so whenever we have the .parentElement
+    //keyword we dont need to write document. along with it when using the variable that holds the .parentElement)**
     parent.appendChild(content);
     // reset the event handlers
     setupListenersFor(window);
     // hide the placeholder
     //we hide the placeholder that says the pip window is opened
+    // display is built into CSS to show (flex or)** or hide (none) something (could we have used a classList as well in HTML 
+    //for the placeholder)**
     placeholder.style.display = 'none';
   });
 });
 
 //set up the event listeners intiially when the page loads (why would we do this initially)
-//window is the current window so we just have window available on the global scope for free
+//window is the current window so we just have window available on the global scope for free 
+//so window always represents the main window (the bigger window) no matter what right it won't reference the pip window
+//if we have it opened right when we say window**
 setupListenersFor(window);
 
 
