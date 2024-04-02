@@ -7,57 +7,68 @@ const colorOutput = document.querySelector('#colorOutput') as HTMLDivElement;
 const placeholder = document.querySelector('#placeholder') as HTMLDivElement;
 const clipButton = document.querySelector('#clipButton') as HTMLButtonElement;
 
-//is there a method for thw way we open multiple tabs for the dvd because here we have pip so what was the term
-//for the way we opened tabs in dvd file**
+//is there a method name for the way to open multiple tabs for the dvd file because here we have pip so what was the term
+//for the way we opened multiple tabs in dvd file**
 
-//does the window element represent our whole brwoser only in the current window we are in**
+//does the window element represent our whole brwoser only in the current window we are in
+//the window element is the root element of the browser and it ends up being representative of the browser window,
+//the html document, or events on the browser itself (the ones specific to the browser),
+// the navigator, picture and picture, and where things on the global scope are
+//which means anything on that window (if we write in the console and make a var banna and if we say window.banana we get that
+//var back)
+//when we open our pip of dvd windows they have a different window and its a different window context and we have the window
+//proxy for the dvd and its a reference to another window (this allows us to communicate between the pop up and the main window)
 const handleColorRequest = (win: Window) => {
   // check for browser support
-  // the eye dropper is a built in library in JS or method**
+  // the eye dropper is a web API, or native API that comes with the browser and libraries are things we load through npm
+  // and network API's are third party API's (like pokemon API, and API's where we call out to a server) 
   if (!win.EyeDropper) {
     colorOutput.innerText = 'Your browser does not support the EyeDropper API';
     return;
   }
 
   // create an EyeDropper
-  //this allows us the create the eye dropper on the window**
-  //why do we use () here but not when we check if the window has the eye dropper**
-  //how do we know when to use the ()**
+  //this allows us the create the eye dropper on the window
+  //we need the () because we are creating an instance of the eyedropper class
   const eyeDropper = new win.EyeDropper();
+
+  //eyeDropper.open().then((result) => { // do stuff }).catch((e) => { // handle error })
+  //try { 
+  // const result = await eyeDropper.open()
+  // // do stuff
+  // } catch (e) {
+  // //handle error
+  // }
+  //we have .then() with a callback and the second one hides the callback (but the callback is still there) with the await keyword
+  //the result is what gets returned by the await or then (these two are equal)(still pauses executaition and waits until
+  //we are done then keeps going for both)
 
   // trigger the EyeDropper
   eyeDropper
-    .open() //is it the .open() that returns a promise (or is it the eyedropper when we create it and try to use it here)**
-    .then((result: { sRGBHex: string }) => { //does .then() and await do the same thing and just waits until the operation is done
-      //or how are they different**(.then() and await are only used for promises right)**
-      //was it eyedropper that only returns a promise or what else**
+    .open() //the eyedropper is then opened and it returns a promise as a result of opening it 
+    .then((result: { sRGBHex: string }) => { 
       // once we have a result
       // update the text display
       colorOutput.innerText = result.sRGBHex;
       // set the interface's background color
       (colorOutput.parentElement as HTMLElement).style.backgroundColor =
         result.sRGBHex; //is parentElement built in and would it be the interface div how does it know
-        //to only include the color in that box is it because of the div being a block element and doing the color in that whole div**
-        //how does it know to not put the colors on top of the elements**
+        //to only include the color in that box is it because of the div being a block element and doing the color in that whole div
+        //(yes) it changes the color of the div 
     })
     .catch((e) => {
-      colorOutput.textContent = e; //when would there be an error (if we click with the eye dropper and it cant get the color
-      //because wherever we click there will be a color so is it only if it cant get it)**
-      //we make the color output the error message if we cant get the color**
+      colorOutput.textContent = e; //if we cant get the color then there could be an error
     });
 };
 
-//why did we put async here but not in the eyedropper is it because the eyedropper already is a promise but here we
-//are creating a promise otherwise it would have not been a promise**
-//whenever we use the clipboard do we have to use navigator keyword then clipboard**
-//with the eyedropper do we only have to say navigator usually too or what is navigator used for**
+//eye dropper and picutre and picture return a promise and the clipboard does not so we need a promise for it 
+//whenever we use the clipboard do we have to use navigator (does bluetooth, clipboard, etc.)
 const handleCopyRequest = async (win: Window) => {
   try {
     // write some text to the clipboard
     await win.navigator.clipboard.writeText(colorOutput.innerText);
   } catch (e) { //what would be an error would it be if there was no color output when we clicked a color or 
-    //just the ______ when we start the browser
-    //or how would that save**
+    //just the ______ when we start the browser (it would save to ourclipboard if we just had the ______)
     console.error(e);
   }
 };
@@ -66,13 +77,14 @@ const setupListenersFor = (win: Window) => {
   // using .onclick instead of .addEventListener because:
   // .onclick - the button only has one handler that gets overwritten
   // .addEventListener - the button can have several listeners for the same event, we don't want duplicates!
-  //onclick basically does one event then when we click again it stops doing that event and does the newest one (gets overridden)**
-  //addeventlistener does the event for each click so if we press a button 5 times fast then it does the event and adds the rest into
-  //a queue to do the rest of the events**
-  //why dont we want duplicates for out buttons**
+
+  //onclick is a property and when we set it then it gets overridden (if we have one button and we have 4 functions
+  //then if we have an onclick and click a button it would use the most recent method we connected the button to)(1 funciton only
+  //for one click)
+  //when we have addeventlistener if we click it once the button will do all 4 functions will run
 
   clipButton.onclick = () => {
-    //we pass in the current window into these methods**
+    //we pass in the current window into these methods (yes)
     handleCopyRequest(win);
   };
 
@@ -85,80 +97,79 @@ const copyStyles = (win: Window) => {
   // get the interface styles from the main window
   const styles = document.querySelector('#interfaceStyles') as HTMLStyleElement;
   // make a <style> in the PiP window
-  //we get the window HTML and create a style element in it (we dont have access to the popup window HTML but we add
-  //styles to it)**
+  //we get the window HTML and create a style element in it 
   const pipStyle = win.document.createElement('style');
   // copy the text over
-  //we make the style element we just created innertext equal to the styles innertext (the content inside the element with that
-  //id)**so we can use the styles in our popup that we had in our main window
-  //otherwise if we did not have this in the HTML and CSS or JS instead then**
+  //copy all of the styles and put it into the style element we just created and append it to the 
+  //body of our picture and picture window
   pipStyle.innerText = styles.innerText;
   // add the <style> to the PiP window's DOM
-  // if we created an element in the window already for a style element why do we have to append it** (why do we say 
-  //document.body here but only .document with pipstyle)** 
   win.document.body.append(pipStyle);
+
+  //we would duplicate the html and instead of moving the content like we do with the pip button event handler
+  //we could generate html and append that directly (we would make another html for the pip then apply it when the button is clicked)
+  //we would have to build the HTML in JS and instead of appending it to the main document we would append it to the pip
+  //document)
 };
 
 pipButton.addEventListener('click', async () => {
   // one way to get around using an unsupported property with TypeScript is
   // to cast it "as unknown as any" - then it can be anything!
-  //how come we just didnt say as any only so it can be anything**
-  //is documentpictureinpicture build in for pip only is it not build in for clipbaord or eyedropper**
+  // it can be just any if we wanted 
   if (!(window as unknown as any).documentPictureInPicture) {
     //if the window as not return the picture in picture then it returns a message to say the browser does not support
-    //the picture in picture mode**
+    //the picture in picture mode
     colorOutput.innerText = 'Your browser does not support the PiP API';
     return;
   }
 
   // request a PiP window (async/await)
-  //so pip and eye dropper only return promises by default without having us to say async in method signature right**
-  //and clipboard (handlecopyrequest) does not so we have to make a promise ourself for it** 
-  //thats why we dont need an async for pip window and eyedropper but we do for clipboard)**
+  //so pip and eye dropper only return promises by default without having us to say async in method signature
+  //and clipboard (handlecopyrequest) does not so we have to make a promise ourself for it
+  //thats why we dont need an async for pip window and eyedropper but we do for clipboard)
   //this is when we want to actually wait for the pip to load in if its supported whereas above 
-  //its is not supported or cant load the pip in**
-  //we wait until the window is finished being requested here if its supported (until the pip fully loads in)**
+  //its is not supported or cant load the pip in
+  //we wait until the window is finished being requested here if its supported (until the pip fully loads in)
+  //picture and picture does not open another window like another dvd but it opens it from
+  //request window and this makes it stay on top of everything and it does not have a navigation bar (also responsible
+  //for having one window open at a time)(we dont have control over size and placement of picture and picture)
   const pipWindow: Window = await (
     window as unknown as any
   ).documentPictureInPicture.requestWindow();
 
   // copy some CSS from the main window to the PiP window
-  //what does copy styles do and how does it know which styles to copy and we call pipwindow because that represents
-  //the loaded window because we said it was of type window and we have to wait for it to load then
-  //apply styles to it**
+  // its copying everything in the style element on the main page but there is still the styles.css and the 
+  // reset.css that are not part of the copy over and it only copies from the HTML
   copyStyles(pipWindow);
 
   //this gets the interface element which is all of our content but when we say content.parentElement 
-  //how is it a div because if we get the parent of the interface div wouldnt that be the body**
+  //how is it a div because if we get the parent of the interface div wouldnt that be the body (yes and we can say body element)
   const content = document.querySelector('#interface') as HTMLDivElement;
-  const parent = content.parentElement as HTMLDivElement;
+  const parent = content.parentElement as HTMLDivElement; //HTMLBodyElement
 
   // move the interface into the pipWindow
   // why do we move the content from the main window to the pipwindow why cant we just copy it over
-  // is this specifically for pip**
+  // here we get the html
   pipWindow.document.body.appendChild(content);
   // reset the event handlers
-  // why do we reset the event handlers if we move the interface from the browser to the pip  (do we usually only
-  //do this with pip why)**
+  // why do we reset the event handlers if we move the interface from the browser to the pip 
+  // we assign the onclick handlers so they are getting overridden or repalced and it gets put it a new
+  // window and we need the window to talk to the eye dropper and the clipboard (it reassigns the window to pipwindow)
   setupListenersFor(pipWindow);
   // show the placeholder
-  //how does it know to show the placeholder where the interface was on the main screen**
-  //there was no show or hide class so was this under the interface before (we didnt change the z-index though)**
-  //why do we do display flex here if we already did it in the styles in index.html**
-  //I thought we would have put show here instead since the style already have flex**
-  //can we do this or classlist for HTML element how do we know which to use**
+  // in styles.css we have the place holder none in the styles.css so we do display flex here to override that (we did not need
+  //the styles.css)
   placeholder.style.display = 'flex';
 
   // when the PiP closes
-  // is page hide built in and only used with pip**
+  // is page hide built in and only used with pip (used for other purposes as well)
   pipWindow.addEventListener('pagehide', () => {
     // put the content back in the main window
-    // can we say parent.document.body.appendChild(content); or why would we only say append child only here**
-    // does parent represent a div here or the body** (which div)**
+    // can we say parent.document.body.appendChild(content); or why would we only say append child only here (parent is the body
+    //already thats why)
+    //the content knows who the parent is and we just reassign the parent back to the parent 
     parent.appendChild(content);
     // reset the event handlers
-    //why do we reset the event handlers and how does it know what window is and how does it know
-    //window is the main window**
     setupListenersFor(window);
     // hide the placeholder
     //we hide the placeholder that says the pip window is opened
@@ -166,7 +177,8 @@ pipButton.addEventListener('click', async () => {
   });
 });
 
-//set up the event listeners intiially when the page loads (why would we do this initially)**
+//set up the event listeners intiially when the page loads (why would we do this initially)
+//window is the current window so we just have window available on the global scope for free
 setupListenersFor(window);
 
 
