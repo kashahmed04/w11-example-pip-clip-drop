@@ -3,8 +3,8 @@
 // here, we add our own (and extend the Window interface)
 
 //TS knows to use these as types automatically and it does it by convention
-//and it looks for .d.ts file extension so we can automatically use this in our JS withiout using an
-//import or export statement**
+//and it looks for .d.ts file extension so we can automatically use this in our JS without using an
+//import or export statement****
 interface ColorSelectionOptions {
   signal?: AbortSignal;
 }
