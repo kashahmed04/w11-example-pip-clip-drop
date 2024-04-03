@@ -212,10 +212,10 @@ setupListenersFor(window);
  * also has picture and picture to view videos and it applies
  * for whatever tab we want to go to and we get only one picture and picture per browser**
  * picture and picture allows only one window and it goes on top of all the other tabs we go to**
- * when the parent is closed does the picture in picture also close here**
+ * when the parent is closed does the picture in picture also close here (yes)**
  * 
  * and we have a color picker and we can find a pixel for a color and it works outside the browser window and gives us color 
- * on our task bar and our home screen if we wanted** 
+ * on our task bar and our home screen if we wanted (how is that part of the eyedropper tool)** 
  * 
  * it also updates the background color and puts the hexcode on the background for out interface div**
  * 
@@ -228,12 +228,16 @@ setupListenersFor(window);
  * opens an eyedropper picker tool when we press pick color
  * only available in chrome, edge, and opera 
  * because of this it does not exist on the window object as far as typescript is concered and we have to trick it to
- * let it work on the window** (where did we do this specifically was it when we said as unknown as any what does this do
- * why couldnt we say any)**
+ * let it work on the window (where did we do this specifically was it when we said as unknown as any what does this do
+ * why couldnt we say any) (yes)(so in regular JS the eyedropper works on the window)**
  * 
- * what does it mean by defintions for non-mainline feature for eyedropper on slide 4**
+ * what does it mean by defintions for non-mainline feature for eyedropper on slide 4 (does this mean since the eyedropper
+ * does not exist in TS as a mainline element we have to make a definition for it)**
  * main controls the eyedropper in terms of launching it and changing the interface element based on the color we chose
- * as well as the pip right**
+ * as well as the launchin and using the pip right**
+ * the eyedropper TS lets us use eyedropper properties and the eydropper itself in TS since its not defined in TS**
+ * 
+ * what does system level mean in slide 4**
  * 
  * CLIPBOARD:
  * 
@@ -241,9 +245,9 @@ setupListenersFor(window);
  * readtext: reading only strings (text)
  * 
  * write: write any string into the**
- * wiretext: encode the**
+ * writetext: encode the**
  * 
- * stick with readtext and writetext because working with strings is easier and it gets complicated if we work with
+ * stick with readtext and writetext usually because working with strings is easier and it gets complicated if we work with
  * read and write only** (how does it get complicated)** (slide 5)**
  * 
  * 
@@ -251,14 +255,15 @@ setupListenersFor(window);
  * 
  * we have a style element in the head because as we open the picture and picture it loses the styles for that
  * window so we can grab the id from the styles and apply the styles in the picture and picture button** (why does it lose
- * its styles when we open pip and open it back up in the main browser when we exit pip)**
+ * its styles when we open pip and open it back up in the main browser when we exit pip)(I thought we just copied the 
+ * styles over how does it lose the styles)**
  * 
  * we have a placeholder div thats hidden (how is it hidden because we dont give it a classlist 
- * in the HTML)** but when we open the picture and picture it gets shown (it gives the interface
+ * in the HTML (we say display: none in CSS)) but when we open the picture and picture it gets shown (it gives the interface
  * to the other window and shows the interface on the new window)(in reality it)**
  * why do we transfer the data over to the pip or to the main window and not just copy the data over instead**
  * 
- * are eyedropper, pip, clipboard, window, and build all API's or which ones are API's (are they restful API's)**
+ * are web API's restful (same for third party API's and libraries)**
  * 
  * MAIN.TS:
  * 
@@ -297,15 +302,16 @@ setupListenersFor(window);
  * EYEDROPPER.TS:
  * 
  * since TS does not support eye dropper we add out own interfaces and extended the window property to have these
- * eye dropper properties**
+ * eye dropper properties****
  * 
  * WINDOW MOVEMENT:
  * 
  * to open child windows (these windows dont stay on top of everything else and dont leave when we close parent 
- * window and we can have multiple child windows with these new mtethods instead of 1)**
+ * window and we can have multiple child windows with these new mtethods instead of 1)(when we close the parent
+ * window the children remain but they dont move why)**
  * 
- * for picture in picture it stays on top of all the other tabs, we can only have 1 pip, and can it still show
- * even if the parent tab is closed**
+ * for picture in picture it stays on top of all the other tabs, we can only have 1 pip, and the pip will close
+ * when parent tab is closed**
  * 
  * we can have DVDs and we can have the DVD screens go around the window and bounce off the bounds 
  * we could also close all the windows and they could go away when we open multilpe windows (the main window keeps 
