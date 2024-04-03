@@ -71,10 +71,11 @@ const driveWindows: FrameRequestCallback = (timeStamp) => {
 
   //we keep calling this each frame
   //we get a new timestamp per frame for free when we call driveWindows** (how)** (how do we know what to call to get it for free)**
+  //how do we know what the time stamp is (based on the frame)**
   window.requestAnimationFrame(driveWindows);
 };
 
 //initially start the method off 
 //when we call drivewindows we get a timestamp for free (is the timestamp as soon as the browser
-//starts and it starts counting up in ms)**
+//starts (when the browser is finished loading in or when the browser is opened)** and it starts counting up in ms)****
 window.requestAnimationFrame(driveWindows);

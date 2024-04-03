@@ -103,6 +103,9 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
     // so it wont be the same across softwares because of the refresh rate** 
     x = x + dx * deltaTimeSeconds;
     y = y + dy * deltaTimeSeconds;
+    //so we make x and y initially to make the window size for each window when we open it
+    // then we override it with the rate it should move
+    //at per frame (how does that work)****
 
     // check left bound
     // when we get passed our boundary we reset our poisition but we add the padding onto it 
@@ -151,13 +154,19 @@ export const makeDVD = (): DVD => { //this allows us to know what the funciton s
   //after everythign is created for the window (we call init window so that we can initially set up a dvd when we make one in main)
   //why do we call initwindow if we call the make dvd class from main or do methods only get defined and not called within the class
   //itself and we have to actually call methods from the class for it to work**
+  //when we click the create button from main.ts
+  //it makes everything then call init window to apply these changes then it makes
+  //the window so we dont need to worry if we override the x and the y for the movement in step because we already
+  //applied the size of the window****
+  //the methods in init window only set up the methods for each dvd and we have to actually call them for us to
+  //apply the method to the window****
 
   // return only the properties we want to expose to outside files
   // we want main to be able to use the proxy which is the current window 
   // and we return these methods to use it in main with each dvd
   return {
-    getWindow: () => { //why do we return a method here and not just proxy** (or is this not a method what is this)**
-      //difference between this and a method**
+    getWindow: () => { //why do we return a method here and not just proxy**** (or is this not a method what is this)****
+      //difference between this and a method****
       return proxy;
     },
     isOpen,
