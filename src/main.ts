@@ -1,5 +1,5 @@
 import './reset.css';
-import './styles.css'; //how does it know to import styles if there was no export in styles**
+import './styles.css'; //how does it know to import styles if there was no export in styles****
 
 const pipButton = document.querySelector('#pipButton') as HTMLButtonElement;
 const dropButton = document.querySelector('#dropButton') as HTMLButtonElement;
@@ -8,20 +8,25 @@ const placeholder = document.querySelector('#placeholder') as HTMLDivElement;
 const clipButton = document.querySelector('#clipButton') as HTMLButtonElement;
 
 //is there a method name for the way to open multiple tabs for the dvd file because here we have pip so what was the term
-//for the way we opened multiple tabs in dvd file**
+//for the way we opened multiple tabs in dvd file****
 
-//for pip we can have one tab, it will go on top of the other tabs we open, and it will close when the main tab closes**
+//for pip we can have one tab, it will go on top of the other tabs we open, and it will close when the main tab closes****
 //for multiple tabs we can have multiple, they will not lay on top of the current tab, and the popups will remain if we close
-//the main tab but will not apply any of the JS to it (to move and in general if we close the main tab on popup multiple windows)**
+//the main tab but will not apply any of the JS to it (to move and in general if we close the main tab on popup multiple windows)****
 
 //does the window element represent our whole brwoser only in the current window we are in
 //the window element is the root element of the browser and it ends up being representative of the browser window,
-//the html document, or events on the browser itself (the ones specific to the browser),
+//the html document, or events on the browser itself (the ones specific to the browser not the events we create 
+//with add event listener or onclick)****,
 // the navigator, picture and picture, and where things on the global scope are
 //which means anything on that window (if we write in the console and make a var banna and if we say window.banana we get that
-//var back)
-//when we open our pip of dvd windows they have a different window and its a different window context and we have the window
-//proxy for the dvd and its a reference to another window (this allows us to communicate between the pop up and the main window)
+//var value back)**** (even if we just declare banana it would return)****
+//when we open our dvd windows they have a different window and its a different window context and we have the window
+//proxy for the dvd and its a reference to another window (this allows us to communicate between the pop ups and the main window)
+//so each window is not related to the other (not even the main window or only to do the opening and closing of windows and keep
+//the count of windows open or)**** for dvds but for pip if we open the new window its a copy of the main window
+//and we pass information from the main window to the pip and vice versa and each window is related to each other****
+
 const handleColorRequest = (win: Window) => {
   // check for browser support
   // the eye dropper and everything else on slides 
@@ -53,7 +58,7 @@ const handleColorRequest = (win: Window) => {
     .open() //the eyedropper is then opened and it returns a promise as a result of opening it 
     .then((result: { sRGBHex: string }) => { 
       //so when we click the button to open the eyedropper it opens but how does it handle if we click to get a color does it stay
-      //in this .then the whole time we have the eyedropper open to get the colors and display them**
+      //in this .then the whole time when we have the eyedropper open to get the colors and display them****
       // once we have a result
       // update the text display
       colorOutput.innerText = result.sRGBHex;
@@ -61,7 +66,7 @@ const handleColorRequest = (win: Window) => {
       (colorOutput.parentElement as HTMLElement).style.backgroundColor =
         result.sRGBHex; //is parentElement built in and would it be the interface div how does it know
         //to only include the color in that box is it because of the div being a block element and doing the color in that whole div
-        //(yes) it changes the color of the div** (why do we say HTMLElement and not put div with it because the interface is a div)**
+        //(yes) it changes the color of the div**** (why do we say HTMLElement and not put div with it because the interface is a div)****
     })
     .catch((e) => {
       colorOutput.textContent = e; //if we cant get the color then there could be an error
@@ -87,12 +92,12 @@ const setupListenersFor = (win: Window) => {
 
   //onclick is a property and when we set it then it gets overridden (if we have one button and we have 4 functions
   //then if we have an onclick and click a button it would use the most recent method we connected the button to)(1 funciton only
-  //for one click)(which is the most recent funciton)
+  //for one click)(which is the most recent function)****
   //when we have addeventlistener if we click it once the button will do all 4 functions will run (is this if we have the same
-  //button attached to different methods for onclick and addeventlistener and onclick)**
+  //button attached to these different methods for onclick and addeventlistener or how would that work)****
 
   //couldnt we have done addeventlistener here because we have different buttons and they would both
-  //call different methods so how would it duplicate**
+  //call different methods so how would it duplicate****
 
   clipButton.onclick = () => {
     //we pass in the current window into these methods (yes)
@@ -110,7 +115,7 @@ const copyStyles = (win: Window) => {
   // make a <style> in the PiP window
   //we get the window HTML and create a style element in it 
   const pipStyle = win.document.createElement('style');
-  // copy the text over
+  //copy the text over
   //copy all of the styles and put it into the style element we just created and append it to the 
   //body of our picture and picture window
   pipStyle.innerText = styles.innerText;
@@ -123,6 +128,8 @@ const copyStyles = (win: Window) => {
   //document)(so would it be seperate HTML or within the JS make the HTML why would we do that)**
 };
 
+//so eyedropper is the only one that returns a promise and for window and clipboard we have to create our own
+//promise**** (difference between promise for pip window and clipboard)****
 pipButton.addEventListener('click', async () => {
   // one way to get around using an unsupported property with TypeScript is
   // to cast it "as unknown as any" - then it can be anything!
@@ -177,7 +184,7 @@ pipButton.addEventListener('click', async () => {
 
   // when the PiP closes
   // is page hide built in and only used with pip (used for other purposes as well)
-  //so this accounts for when we close the window orselves right**
+  // so this accounts for when we close the window ourselves right**
   pipWindow.addEventListener('pagehide', () => {
     // put the content back in the main window
     // can we say parent.document.body.appendChild(content); or why would we only say append child only here (parent is the body
@@ -188,9 +195,9 @@ pipButton.addEventListener('click', async () => {
     // reset the event handlers
     setupListenersFor(window);
     // hide the placeholder
-    //we hide the placeholder that says the pip window is opened
+    // we hide the placeholder that says the pip window is opened
     // display is built into CSS to show (flex or)** or hide (none) something (could we have used a classList as well in HTML 
-    //for the placeholder)**
+    // for the placeholder)**
     placeholder.style.display = 'none';
   });
 });
@@ -316,15 +323,16 @@ setupListenersFor(window);
  * we can have DVDs and we can have the DVD screens go around the window and bounce off the bounds 
  * we could also close all the windows and they could go away when we open multilpe windows (the main window keeps 
  * track of all the children and close them if needed by using request animation frame to change their 
- * position each frame and close them if needed)**
+ * position each frame and close them if needed)****
  * 
  * for slide 6 the window represents the variable we have for window and we can open a window, 
  * move the window to a specific location (all at one time or like an animation but it needs the elapsed time and the current time
  * which is the request animation frame), close the window with close(), and closed returns true if the window is closed or false 
- * if the window is not closed** (is there not an opened to say true if its opened or false if its not)**
+ * if the window is not closed** (is there not an opened to say true if its opened or false if its not)(there is no opened)
  * 
  * go over currentColor (slide 6)**
- * does svg inline refer to the path we made with the svg tag in our dvd and that allows us to add CSS to it**
+ * does svg inline refer to the path we made with the svg tag in our dvd and that allows us to add 
+ * CSS to it and edit the SVG however we want**
  * does svg as <img> refer to putting the svg as an image tag but we can't add styles to it**
  * for closures is that just defining variabes (and methods)** with let and const inside of a class (or var too)** and**
  * 
@@ -346,12 +354,13 @@ setupListenersFor(window);
  * rather than per frame (consistent across all softwares) and we close everything when we are done (we click the close all button
  * on the parent browser)**
  * 
- * main is more a manager and DVD.TS is under the hood whats happening and the functionality of how eveyrthing works**
+ * main is more a manager and DVD.TS is under the hood whats happening and the functionality of how eveyrthing works****
  * 
  * DVD.TS:
  * 
  * we can use the funciton scope of let and const to trick TS into making things like private properties (we have proxy, height
- * x,y,etc. that we dont want to define outside the interface or class)** (does var also count or no)** 
+ * x,y,etc. that we dont want to define outside the interface or class)** (does var also count or no or how does scope
+ * work in classes for var because its rather function or global scope)****
  * if we use var in classes is that only the class scope or no** 
  * 
  * at down at the bottom of the DVD.TS it returns the things main will be aware of otherwise eveyrthing else is hidden inside 
@@ -364,7 +373,8 @@ setupListenersFor(window);
  * was on the bottom then**
  * 
  * we pick a starting speed and we multilpy by 1 or negative so we can have up or down or left and right movement (we only multiply
- * by negative 1 though so if we hit the bottom wouldnt it keep going at the bottom and not move towards the top in the oppssotie direcion)**
+ * by negative 1 though so if we hit the bottom wouldnt it keep going at the bottom and not 
+ * move towards the top in the oppossoite direction)****
  * 
  * we can then open the popup which is the proxy for a random width and height**
  * 
@@ -386,7 +396,7 @@ setupListenersFor(window);
  * (like CSS and what else)** but the other
  * way is just include the SVG data (tag)** in our HTML like setting the fill and we can make ID's and we can target the ID with code and CSS
  * to target just that part of the SVG but the downside is that if we want the SVG to show up in multilpe areas we have to copy and paste
- * it wherever we want to ues it**
+ * it wherever we want to ues it****
  * 
  * go over svg in an image element (block or inline).vs. and svg being inline and what the differences and similarities are (slide 6)**
  * 
